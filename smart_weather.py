@@ -20,7 +20,7 @@ DB_FORECAST = BASE_PATH / "forecast_data.db"
 DB_CURRENT = BASE_PATH / "current_data.db"
 
 # Database loading functions
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=120)
 def get_available_cities():
     """Dynamically fetch list of cities from databases"""
     cities = set()
@@ -56,7 +56,7 @@ def get_available_cities():
         st.warning(f"Could not load cities from meteostat database: {e}")
     
     return sorted(list(cities)) if cities else ["Nairobi", "Sydney", "New York", "London"]
-@st.cache_data(ttl=3600)  # Cache for 1 hour
+@st.cache_data(ttl=120)  # Cache for 1 hour
 def load_current_weather():
     """Load current weather data from database"""
     try:
@@ -78,7 +78,7 @@ def load_current_weather():
         st.error(f"Error loading current weather: {e}")
         return pd.DataFrame()
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=120)
 def load_forecast_data():
     """Load forecast data from database"""
     try:
@@ -97,7 +97,7 @@ def load_forecast_data():
         st.error(f"Error loading forecast data: {e}")
         return pd.DataFrame()
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=120)
 def load_meteostat_data():
     """Load historical meteostat data from database"""
     try:
